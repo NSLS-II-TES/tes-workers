@@ -15,7 +15,6 @@ from bluesky.utils import install_qt_kicker
 from event_model import DocumentRouter, RunRouter
 
 
-install_qt_kicker()
 matplotlib.backends.backend_qt5._create_qApp()
 
 log = logging.getLogger("tes.worker.livegrid")
