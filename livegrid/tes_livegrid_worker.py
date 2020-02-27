@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from bluesky_kafka import RemoteDispatcher
-from bluesky.utils import install_qt_kicker
-
+from caproto.threading.client import Context
 from event_model import DocumentRouter, RunRouter
 
 
@@ -48,6 +47,10 @@ class LiveGridDocumentRouter(DocumentRouter):
 
         self.run_uid = None
         self.array_counter_descriptor_uid = None
+        self.roi_pv_name = None
+
+        self.epics_context = Context()
+        self.roi_pv = None
 
     def start(self, doc):
         log.debug("start")
@@ -93,7 +96,8 @@ class LiveGridDocumentRouter(DocumentRouter):
             row = (array_counter - 1) // 10
             col = (array_counter - 1) % 10
             log.debug("array_counter: %s, row: %s, column: %s", array_counter, row, col)
-            self.image_array[row, col] = array_counter
+            roi_value = self.roi_pv.read()
+            self.image_array[row, col] = roi_value.data[0]
             log.debug(self.image_array)
             self.ax.imshow(self.image_array)
             self.fig.canvas.draw_idle()
