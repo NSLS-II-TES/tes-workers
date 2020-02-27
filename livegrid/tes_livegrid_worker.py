@@ -75,6 +75,11 @@ class LiveGridDocumentRouter(DocumentRouter):
                 self.array_counter_descriptor_uid = doc["uid"]
             else:
                 log.info("no ArrayCounter")
+
+            if "xs_channel1_rois_roi1_value" in doc["data_keys"]:
+                self.roi_pv_name = doc["data_keys"]["xs_channel1_rois_roi1_value"]["source"]
+                self.roi_pv,  = self.epics_context.get_pvs(self.roi_pv_name)
+                log.info(f"found the ROI PV name: {self.roi_pv_name}")
         else:
             pass
 
