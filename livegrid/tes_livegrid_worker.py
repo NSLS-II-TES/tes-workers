@@ -202,10 +202,9 @@ if __name__ == "__main__":
 
     # factory('start', start_doc) -> List[Callbacks], List[SubFactories]
     def livegrid_document_router_factory(start_doc_name, start_doc):
-        # create a DocumentRouter only for fly scans (?)
-        # TODO: does the flyscan start document have an identifying key?
-        if "livegrid" in start_doc:
-            log.info("we have a livegrid scan")
+        # create a DocumentRouter only for list_scans
+        if start_doc["plan_name"] == "list_scan":
+            log.info("we have a list_scan")
             livegrid_document_router = LiveGridDocumentRouter(
                 array_counter_data_key=args_.array_counter_data_key,
                 #array_counter_name="ArrayCounter"
@@ -213,7 +212,7 @@ if __name__ == "__main__":
             livegrid_document_router(start_doc_name, start_doc)
             return [livegrid_document_router], []
         else:
-            log.info("not a fly scan!")
+            log.info("not a list_scan!")
             return [], []
 
     livegrid_dispatcher(
