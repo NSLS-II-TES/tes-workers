@@ -36,9 +36,9 @@ python tes_livegrid_server.py \
 
 
 class LiveGridDocumentRouter(DocumentRouter):
-    def __init__(self, array_counter_name, *args, **kwargs):
+    def __init__(self, array_counter_data_key, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.array_counter_name = array_counter_name
+        self.array_counter_name = array_counter_data_key
 
         self.fig = None
         self.ax = None
@@ -145,6 +145,12 @@ if __name__ == "__main__":
     argparser.add_argument(
         "--group-id", type=str, help="a string", default="tes-livegrid-worker"
     )
+    argparser.add_argument(
+        "--array-counter-data-key",
+        type=str,
+        help="Xspress3 array counter data key",
+        default="ArrayCounter"
+    )
 
     args_ = argparser.parse_args()
     print(args_)
@@ -156,7 +162,8 @@ if __name__ == "__main__":
         if "livegrid" in start_doc:
             log.info("we have a livegrid scan")
             livegrid_document_router = LiveGridDocumentRouter(
-                array_counter_name="ArrayCounter"
+                array_counter_data_key=args_.array_counter_data_key,
+                #array_counter_name="ArrayCounter"
             )
             livegrid_document_router(start_doc_name, start_doc)
             return [livegrid_document_router], []
