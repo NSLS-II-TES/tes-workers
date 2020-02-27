@@ -159,7 +159,7 @@ class LiveGridDocumentRouter(DocumentRouter):
         super().stop(doc)
 
 
-def livegrid_dispatcher(manager, busy_function, topics, bootstrap_servers, group_id):
+def livegrid_dispatcher(manager, busy_function, topics, bootstrap_servers, group_id, **kwargs):
     dispatcher = RemoteDispatcher(
         topics=topics,
         bootstrap_servers=bootstrap_servers,
