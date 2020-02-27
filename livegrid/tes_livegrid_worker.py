@@ -67,6 +67,18 @@ class LiveGridDocumentRouter(DocumentRouter):
         super().start(doc)
 
     def descriptor(self, doc):
+        """
+        In [15]: list_scans[0].descriptors[0]["data_keys"]["xs_channel1_rois_roi01_value"]
+        Out[15]:
+        {'source': 'PV:XF:08BM-ES{Xsp:1}:C1_ROI1:Value_RBV',
+         'dtype': 'number',
+         'shape': [],
+         'precision': 4,
+         'units': '',
+         'lower_ctrl_limit': 0.0,
+         'upper_ctrl_limit': 0.0,
+         'object_name': 'xs'}
+        """
         if self.run_uid == doc["run_start"]:
             log.debug("descriptor:")
             log.debug(pprint.pformat(doc))
@@ -92,6 +104,34 @@ class LiveGridDocumentRouter(DocumentRouter):
     def event_page(self, doc):
         """
         Respond to array counter monitor events.
+
+        Read ROI PV.
+
+        In [41]: db[-1].descriptors[0]["data_keys"]["xs_channel1_rois_roi01_value"]
+        Out[41]:
+        {'source': 'PV:XF:08BM-ES{Xsp:1}:C1_ROI1:Value_RBV',
+         'dtype': 'number',
+         'shape': [],
+         'precision': 4,
+         'units': '',
+         'lower_ctrl_limit': 0.0,
+         'upper_ctrl_limit': 0.0,
+         'object_name': 'xs'}
+
+        In [42]: db[-1].descriptors[0]["data_keys"]["xs_channel1_rois_roi01_value_sum"]
+        Out[42]:
+        {'source': 'PV:XF:08BM-ES{Xsp:1}:C1_ROI1:ValueSum_RBV',
+         'dtype': 'number',
+         'shape': [],
+         'precision': 4,
+         'units': '',
+         'lower_ctrl_limit': 0.0,
+         'upper_ctrl_limit': 0.0,
+         'object_name': 'xs'}
+
+        In [16]: list_scans = list(db(plan_name="list_scan")
+        In [17]: len(list_scans)
+        Out[17]: 230
         """
         log.debug("event page:")
         log.debug(pprint.pformat(doc))
