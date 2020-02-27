@@ -168,7 +168,7 @@ def livegrid_dispatcher(manager, busy_function, topics, bootstrap_servers, group
 
     dispatcher.subscribe(func=manager)
 
-    dispatcher.start(busy_function=busy_function)
+    dispatcher.start(work_during_wait=busy_function)
 
 
 if __name__ == "__main__":
