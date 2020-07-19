@@ -25,7 +25,7 @@ Start simulated Xspress3.
 Start tes_livegrid_worker.py.
     python tes_livegrid_worker.py
 Start send_documents_to_livegrid_worker.py
-    python testing/send_documents_to_livegrid_worker.py
+    python testing/send_documents_to_livegrid_worker.py --topic tes.bluesky.documents --bootstrap-servers 10.0.137.8:9092
 """
 
 
